@@ -17,11 +17,26 @@ type User {
   isActive: Boolean!
 }
 
+type AuthResponse {
+  token: String!
+  user: User!
+}
+
 type Query {
   items: [Item!]!
   item(id: ID!): Item!
-  users: [User!]!
+  users(roles: [ValidRoles!] = []): [User!]!
   user(id: ID!): User!
+  revalidate: AuthResponse!
+}
+
+"""
+Consequat id consectetur eiusmod qui eiusmod veniam amet id amet in reprehenderit.
+"""
+enum ValidRoles {
+  admin
+  user
+  superUser
 }
 
 type Mutation {
@@ -29,6 +44,8 @@ type Mutation {
   updateItem(updateItemInput: UpdateItemInput!): Item!
   removeItem(id: ID!): Item!
   blockUser(id: ID!): User!
+  signup(signupInput: SignupInput!): AuthResponse!
+  login(loginInput: LoginInput!): AuthResponse!
 }
 
 input CreateItemInput {
@@ -42,4 +59,15 @@ input UpdateItemInput {
   quantity: Float
   quantityUnits: String
   id: ID!
+}
+
+input SignupInput {
+  email: String!
+  fullName: String!
+  password: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
 }
