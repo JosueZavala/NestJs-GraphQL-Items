@@ -37,7 +37,13 @@ export class UsersService {
   }
 
   async findAll(roles: ValidRoles[]): Promise<User[]> {
-    if (roles.length === 0) return this.usersRepository.find();
+    if (roles.length === 0)
+      return this.usersRepository.find({
+        // ??: No es necesario porque tenemos lazy la propiedad de lastUpdatedBy en user.entity
+        /* relations: {
+          lastUpdatedBy: true,
+        }, */
+      });
 
     // ?? tenemos roles ['admin', 'superUser]
     return this.usersRepository
@@ -67,8 +73,13 @@ export class UsersService {
     return `This action updates a #${id} user`;
   }
 
-  block(id: string): Promise<User> {
-    throw new Error(`findOne method not yet implemented`);
+  async block(id: string, adminUser: User): Promise<User> {
+    const userToBlock = await this.findOneById(id);
+
+    userToBlock.isActive = false;
+    userToBlock.lastUpdatedBy = adminUser;
+
+    return await this.usersRepository.save(userToBlock);
   }
 
   private handleDBErrors(error: any): never {

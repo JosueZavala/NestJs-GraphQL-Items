@@ -19,7 +19,6 @@ export class UsersResolver {
     @Args() validRoles: ValidRolesArgs,
     @CurrentUser([ValidRoles.admin, ValidRoles.superUser]) user: User,
   ): Promise<User[]> {
-    console.log({ user });
     return this.usersService.findAll(validRoles.roles);
   }
 
@@ -36,8 +35,11 @@ export class UsersResolver {
     return this.usersService.update(updateUserInput.id, updateUserInput);
   } */
 
-  @Mutation(() => User)
-  blockUser(@Args('id', { type: () => ID }) id: string) {
-    return this.usersService.block(id);
+  @Mutation(() => User, { name: 'blockUser' })
+  blockUser(
+    @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
+    @CurrentUser([ValidRoles.admin]) user: User,
+  ) {
+    return this.usersService.block(id, user);
   }
 }
