@@ -23,3 +23,11 @@ docker-compose up -d
 ```
 yarn start:dev
 ```
+
+6. Visitar el sitio
+
+```
+localhost:3000/graphql
+```
+
+7. Ejecutar la **"mutación"** executeSeed, para llenar la base de datos con información
