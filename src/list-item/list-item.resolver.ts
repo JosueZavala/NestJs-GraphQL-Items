@@ -9,7 +9,9 @@ export class ListItemResolver {
   constructor(private readonly listItemService: ListItemService) {}
 
   @Mutation(() => ListItem)
-  createListItem(@Args('createListItemInput') createListItemInput: CreateListItemInput) {
+  createListItem(
+    @Args('createListItemInput') createListItemInput: CreateListItemInput,
+  ): Promise<ListItem> {
     return this.listItemService.create(createListItemInput);
   }
 
@@ -18,7 +20,7 @@ export class ListItemResolver {
     return this.listItemService.findAll();
   }
 
-  @Query(() => ListItem, { name: 'listItem' })
+  /*   @Query(() => ListItem, { name: 'listItem' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.listItemService.findOne(id);
   }
@@ -31,5 +33,5 @@ export class ListItemResolver {
   @Mutation(() => ListItem)
   removeListItem(@Args('id', { type: () => Int }) id: number) {
     return this.listItemService.remove(id);
-  }
+  } */
 }
