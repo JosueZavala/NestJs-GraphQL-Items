@@ -3,6 +3,7 @@ import { ListItemService } from './list-item.service';
 import { ListItem } from './entities/list-item.entity';
 import { CreateListItemInput } from './dto/create-list-item.input';
 import { UpdateListItemInput } from './dto/update-list-item.input';
+import { ParseUUIDPipe } from '@nestjs/common';
 
 @Resolver(() => ListItem)
 export class ListItemResolver {
@@ -11,6 +12,7 @@ export class ListItemResolver {
   @Mutation(() => ListItem)
   createListItem(
     @Args('createListItemInput') createListItemInput: CreateListItemInput,
+    //! Todo: pedir el usuario para validarlo
   ): Promise<ListItem> {
     return this.listItemService.create(createListItemInput);
   }
@@ -20,10 +22,13 @@ export class ListItemResolver {
     return this.listItemService.findAll();
   } */
 
-  /*   @Query(() => ListItem, { name: 'listItem' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => ListItem, { name: 'listItem' })
+  findOne(
+    @Args('id', { type: () => String }, ParseUUIDPipe) id: string,
+  ): Promise<ListItem> {
     return this.listItemService.findOne(id);
   }
+  /*   
 
   @Mutation(() => ListItem)
   updateListItem(@Args('updateListItemInput') updateListItemInput: UpdateListItemInput) {
