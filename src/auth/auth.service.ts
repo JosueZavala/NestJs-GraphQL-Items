@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { SignupInput, LoginInput } from './dto/input';

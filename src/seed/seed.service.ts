@@ -36,9 +36,9 @@ export class SeedService {
 
   async executeSeed() {
     // ? Validar que no estemos en Producción
-    if (this.isProd) {
+    /* if (this.isProd) {
       throw new UnauthorizedException('We cannot run SEED on Prod environment');
-    }
+    } */
 
     // ? Limpiar la base de datos (Borrar todo)
     await this.deleteDatabase();

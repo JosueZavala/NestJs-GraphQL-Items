@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 import { SignupInput } from 'src/auth/dto/input/signup.input';
 import { Repository } from 'typeorm';
